@@ -1,0 +1,6 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {receiptSvg} from '../web/receipt.js';
+const dispatch={number:1,created_at:'2026-09-24T01:59:02Z',customer_name:'L Y D MAIVAN',seller_name:'Efrain',issuer_snapshot:'{}',items:[{product_name:'LAMINADO AMARILLO DEL 3',units_count:5,weight_kg:25},{product_name:'LAMINADO VERDE DEL 2',units_count:500,weight_kg:250}]};
+test('receipt prints actual product names, units and kg',()=>{let svg=receiptSvg(dispatch).svg;assert.match(svg,/>LAMINADO AMARILLO DEL 3<\/text>/);assert.match(svg,/>LAMINADO VERDE DEL 2<\/text>/);assert.match(svg,/>5<\/text>/);assert.match(svg,/>500<\/text>/);assert.match(svg,/>25<\/text>/);assert.match(svg,/>250<\/text>/);assert.match(svg,/>TOTAL: 505 u · 275 kg<\/text>/);assert.doesNotMatch(svg,/>    0<\/text>/)});
+test('wrapped product continuation has no repeated units or weight',()=>{let svg=receiptSvg({...dispatch,items:[{product_name:'PRODUCTO ARTESANAL AMARILLO DE TRIGO EXTRA LARGO',units_count:3,weight_kg:1.5}]}).svg;assert.match(svg,/>PRODUCTO ARTESANAL AMARILLO DE<\/text>/);assert.match(svg,/>    TRIGO EXTRA LARGO<\/text>/);assert.equal((svg.match(/>3<\/text>/g)||[]).length,1);assert.equal((svg.match(/>1,5<\/text>/g)||[]).length,1)});
