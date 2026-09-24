@@ -1,1 +1,1 @@
-{"name":"efrapp-api","main":"worker.js","compatibility_date":"2026-09-01","d1_databases":[{"binding":"DB","database_name":"efrapp","database_id":"8133849f-5ee5-4a47-bfe2-1e9671bd435c","migrations_dir":"migrations"}],"vars":{"ALLOWED_ORIGIN":"http://localhost:4173"}}
+{"name":"efrapp-api","main":"worker.js","compatibility_date":"2026-09-01","d1_databases":[{"binding":"DB","database_name":"efrapp","database_id":"8133849f-5ee5-4a47-bfe2-1e9671bd435c","migrations_dir":"migrations"}],"vars":{"ALLOWED_ORIGIN":"https://efrapp.pages.dev,http://localhost:4173"}}
