@@ -16,3 +16,7 @@ Node 22 o posterior. `npm ci`, `npm run check`, `npm test`. Crear una base D1 co
 **Seguridad:** credenciales con PBKDF2-SHA256 y sal aleatoria, tokens de sesión aleatorios guardados sólo como hash, vencimiento a 7 días y autorización en cada ruta. El frontend conserva el token únicamente en `sessionStorage`. Los despachos se filtran en el servidor por vendedor y alcances. Para Android futuro, la API es independiente del frontend y usa UUID y timestamps ISO; todavía no implementa sincronización.
 
 **Comprobantes:** PDF y PNG comparten el mismo SVG base. El PNG se exporta a 1200 px de ancho; el PDF usa páginas A4. Los borradores no tienen número ni comprobante final.
+
+## Unidades y peso por producto
+
+Cada renglón nuevo requiere unidades enteras y peso total en kg, con hasta tres decimales. Se puede escribir la cantidad de unidades o ajustarla con los botones. La migración `0002_item_units_weight.sql` conserva los despachos anteriores: muestra sus unidades originales y señala que el peso histórico no fue registrado. Antes de publicar el código actualizado, ejecutar `npm run db:remote` en la base de producción.
