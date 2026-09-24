@@ -20,3 +20,12 @@ Node 22 o posterior. `npm ci`, `npm run check`, `npm test`. Crear una base D1 co
 ## Unidades y peso por producto
 
 El peso se configura **por unidad en el catálogo de productos** (kg, hasta tres decimales). En un despacho sólo se ingresan unidades enteras, escribiéndolas o ajustándolas con los botones. El servidor calcula el peso total de cada renglón y guarda una copia del peso por unidad y del total para conservar los comprobantes históricos. Un producto sin peso configurado no puede despacharse: asigná los pesos a los productos existentes desde Administración antes de utilizar el nuevo flujo. Las migraciones `0002` y `0003` conservan los despachos anteriores y dejan como desconocidos los pesos que nunca se registraron. Antes de publicar el Worker actualizado, ejecutar `npm run db:remote` en la base de producción.
+
+## Despliegue automático desde GitHub
+
+`.github/workflows/deploy.yml` publica cada commit de `main` después de pasar las pruebas: aplica las migraciones pendientes de D1, actualiza el Worker y publica `web` y `functions` en el proyecto Pages existente `efrapp`. La primera vez hay que crear en **GitHub → repositorio → Settings → Secrets and variables → Actions** estos dos *repository secrets*:
+
+- `CLOUDFLARE_ACCOUNT_ID`: ID de la cuenta de Cloudflare (dashboard, página de la cuenta).
+- `CLOUDFLARE_API_TOKEN`: token de API de Cloudflare restringido a esta cuenta con permisos de edición para Workers, Pages y D1.
+
+No copiar el token a archivos ni al historial de comandos. Después de guardar ambos secretos, ejecutar el workflow **Deploy EfraApp to Cloudflare** desde la pestaña Actions → Run workflow (rama `main`). Los siguientes commits en `main` se desplegarán automáticamente. Revisar la pestaña Actions si una publicación falla. Mantener `API_ORIGIN` configurada en el proyecto Pages para que `functions/api/[[path]].js` reenvíe las llamadas al Worker.
