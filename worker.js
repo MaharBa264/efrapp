@@ -2,7 +2,7 @@ const json=(data,status=200,headers={})=>new Response(JSON.stringify(data),{stat
 const fail=(message,status=400)=>{throw Object.assign(new Error(message),{status})};
 const uuid=()=>crypto.randomUUID(), now=()=>new Date().toISOString();
 const hash=async text=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text)))).map(x=>x.toString(16).padStart(2,'0')).join('');
-const password=async(pass,salt)=>{let k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveBits']);return Array.from(new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(salt),iterations:210000,hash:'SHA-256'},k,256))).map(x=>x.toString(16).padStart(2,'0')).join('')};
+const password=async(pass,salt)=>{let k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveBits']);return Array.from(new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(salt),iterations:100000,hash:'SHA-256'},k,256))).map(x=>x.toString(16).padStart(2,'0')).join('')};
 const input=(v,max=200)=>typeof v==='string'?v.trim().slice(0,max):'';
 const required=(v,max=200)=>input(v,max)||fail('Campo obligatorio');
 const one=(db,sql,...p)=>db.prepare(sql).bind(...p).first();
@@ -49,4 +49,4 @@ if(path[0]==='dispatches'){
  if(method==='POST'&&path[2]==='void'){need(p,'dispatch.void');let d=await detail(db,u,p,path[1]);if(d.status!=='CONFIRMADO')fail('Estado inválido',409);await run(db,"UPDATE dispatches SET status='ANULADO',voided_by=?,voided_at=?,updated_at=? WHERE id=?",u.id,now(),now(),d.id);return json({ok:true})}
 }
 fail('Ruta inexistente',404)}
-export default {async fetch(req,env){let c=cors(req,env);if(req.method==='OPTIONS')return new Response(null,{status:204,headers:c});try{let r=await handler(req,env);Object.entries(c).forEach(([k,v])=>r.headers.set(k,v));r.headers.set('cache-control','no-store');return r}catch(e){return json({error:e.status?e.message:'Error interno'},e.status||500,c)}}};
+export default {async fetch(req,env){let c=cors(req,env);if(req.method==='OPTIONS')return new Response(null,{status:204,headers:c});try{let r=await handler(req,env);Object.entries(c).forEach(([k,v])=>r.headers.set(k,v));r.headers.set('cache-control','no-store');return r}catch(e){if(!e.status)console.error('EfraApp Worker error',e);return json({error:e.status?e.message:'Error interno'},e.status||500,c)}}};
