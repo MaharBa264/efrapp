@@ -1,10 +1,12 @@
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const kg=v=>Number(v).toLocaleString('es-AR',{maximumFractionDigits:3});
 function wrap(s,max=45){let words=String(s??'').split(/\s+/),lines=[''];for(let w of words){if((lines.at(-1)+' '+w).length>max)lines.push(w);else lines[lines.length-1]+=(lines.at(-1)?' ':'')+w}return lines}
-export function receiptSvg(d){
+export function receiptSvg(d,options={}){
  const inst=JSON.parse(d.issuer_snapshot||'{}'),contacts=[];
  if(d.customer_direction)contacts.push('Domicilio: '+d.customer_direction);
  if(d.customer_phone)contacts.push('Teléfono: '+d.customer_phone);
+ if(options.salesperson&&d.salesperson_name)contacts.push('Vendedor: '+d.salesperson_name);
+ if(options.carrier&&d.carrier_name)contacts.push('Transportista: '+d.carrier_name);
  const lines=[];
  for(const item of d.items)for(const [index,name] of wrap(item.product_name,32).entries())lines.push({name:index?'    '+name:name,units:index?'':String(item.units_count??item.quantity),weight:index?'':item.weight_kg==null?'—':kg(item.weight_kg)});
  const head=357+contacts.length*32,rowStart=head+90,afterRows=rowStart+lines.length*39;

@@ -37,3 +37,7 @@ En Historial, seleccionar cliente y fechas desde/hasta y pulsar **Ver resumen**.
 ## Productos, variedades y empaques
 
 Administración → **Productos**: crear el producto base; **Variedades**: agregar sus tipos; **Empaques**: cargar cada presentación vendible, etiqueta de empaque y peso por unidad. En Despachar se elige cada empaque y se muestra su peso. Se pueden desactivar registros sin perder el historial. La migración `0005_varieties_packaging.sql` agrupa los 24 nombres iniciales conocidos y conserva los demás como productos anteriores editables; los despachos ya guardados mantienen sus nombres y pesos. El reporte por cliente cuenta variedades y presentaciones distintas. El workflow de GitHub aplica la migración automáticamente antes de desplegar el Worker y Pages. Para una instalación nueva, ejecutar `npm run seed:remote` después de aplicar las migraciones.
+
+### Vendedores y transportistas
+
+En **Administración → Vendedores / Transportistas** se mantienen fichas independientes de las cuentas de usuario. Al crear un despacho se pueden elegir ambas fichas; el despacho guarda sus identificadores y nombres históricos. Las casillas para mostrar sólo sus nombres en el PDF o PNG aparecen al abrir el despacho y empiezan desmarcadas. Los despachos anteriores permanecen sin vendedor comercial ni transportista. Ejecutar `npm run db:remote` antes de publicar el Worker para aplicar `0006_dispatch_people.sql`.
