@@ -1,3 +1,3 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
 test('schema has independent dispatch snapshots and access grants',()=>{let s=readFileSync('migrations/0001_initial.sql','utf8');for(let key of ['customer_name TEXT NOT NULL','product_name TEXT NOT NULL','issuer_snapshot TEXT','CREATE TABLE user_visibility','CHECK(status IN', 'CREATE TABLE dispatch_counter'])assert.ok(s.includes(key),key)});
-test('seed contains exactly 24 editable products',()=>{let s=readFileSync('seed.sql','utf8');assert.equal(s.trim().split('\n').length,24);assert.ok(s.includes('INSERT OR IGNORE INTO products'))});
+test('seed contains exactly 24 editable products',()=>{let s=readFileSync('seed.sql','utf8');assert.equal((s.match(/INSERT OR IGNORE INTO products\(/g)||[]).length,24)});

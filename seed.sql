@@ -22,3 +22,29 @@ INSERT OR IGNORE INTO products(id,name,unit,sort_order,created_at,updated_at) VA
 INSERT OR IGNORE INTO products(id,name,unit,sort_order,created_at,updated_at) VALUES('5bc565c6-9225-5522-b474-d304c2f0ab2a','AL HUEVO VERDE DEL 3','unidad',22,datetime('now'),datetime('now'));
 INSERT OR IGNORE INTO products(id,name,unit,sort_order,created_at,updated_at) VALUES('b8846a52-0225-5555-904d-31d1eedb28e1','AL HUEVO MORRON DEL 2','unidad',23,datetime('now'),datetime('now'));
 INSERT OR IGNORE INTO products(id,name,unit,sort_order,created_at,updated_at) VALUES('18b98377-60ef-53a9-9f09-ed59d38a8c33','AL HUEVO MORRON DEL 3','unidad',24,datetime('now'),datetime('now'));
+
+-- Link initial catalog to product families and varieties after migrations.
+UPDATE products SET variety_id='283b8332-98b4-5ff4-8006-79ea0d850dd0',packaging='Estándar' WHERE id='a88685a4-3408-5c78-9fad-5d6642329ce8' AND name='LAMINADO AMARILLO DEL 1' AND variety_id IS NULL;
+UPDATE products SET variety_id='d3e454f4-5234-571a-8f4a-8760632a6a24',packaging='Estándar' WHERE id='703aa8d4-339e-58dc-9ba0-d4659d07770a' AND name='LAMINADO AMARILLO DEL 2' AND variety_id IS NULL;
+UPDATE products SET variety_id='798dcbfa-f3a1-5ea7-9938-fd4b91109b65',packaging='Estándar' WHERE id='00f6facb-0606-5aeb-860f-7a19f8e2ce69' AND name='LAMINADO AMARILLO DEL 3' AND variety_id IS NULL;
+UPDATE products SET variety_id='5f35b230-68e7-58f1-bfbe-646df5584602',packaging='Estándar' WHERE id='3121bcfd-9d19-5ea1-9c01-055560260d48' AND name='LAMINADO VERDE DEL 2' AND variety_id IS NULL;
+UPDATE products SET variety_id='75f9f5ff-51c1-5354-8bb2-8401a47aabbe',packaging='Estándar' WHERE id='94ab7e72-5993-5917-9fbc-9d1c1c57063d' AND name='LAMINADO VERDE DEL 3' AND variety_id IS NULL;
+UPDATE products SET variety_id='04f0b651-de07-598c-a4d0-a9737d76264b',packaging='Estándar' WHERE id='c4a6bbd8-bad1-53d5-91d7-136a97ec17e6' AND name='LAMINADO MORRON DEL 3' AND variety_id IS NULL;
+UPDATE products SET variety_id='0675c2fd-5c00-5209-b589-6d29b33d77dd',packaging='Estándar' WHERE id='c6f6d6f4-fe23-582f-9aa3-4890337a8305' AND name='NIDO COMU AMARILLO' AND variety_id IS NULL;
+UPDATE products SET variety_id='92398a80-d994-5684-91a5-bb35416aae6a',packaging='Estándar' WHERE id='6bbd3b8d-b499-59ad-8825-da12f31a1a9f' AND name='NIDO COMU VERDE' AND variety_id IS NULL;
+UPDATE products SET variety_id='e1a6d779-642e-54a8-b3d3-b7d42028fbd6',packaging='Estándar' WHERE id='2c4dc942-8020-5ee0-8e92-43308f4c6a70' AND name='NIDO COMU MORRON' AND variety_id IS NULL;
+UPDATE products SET variety_id='de491517-9471-5bb1-abbb-578467021ed7',packaging='Estándar' WHERE id='b0ef5bb5-1414-5c53-a42d-00bf9e0a962a' AND name='ENTREFINO' AND variety_id IS NULL;
+UPDATE products SET variety_id='d22c7e39-663d-5881-931c-6948cf4dd9a7',packaging='Estándar' WHERE id='ef8dcd78-1402-5ae0-be1b-14001464f079' AND name='CABELLO' AND variety_id IS NULL;
+UPDATE products SET variety_id='227877c7-e21f-5465-8e40-56ac6489cd9b',packaging='Estándar' WHERE id='d200d1fd-9cbe-5bef-9399-7f8a01ebb52c' AND name='GUISERO TIRABUZON' AND variety_id IS NULL;
+UPDATE products SET variety_id='081b1c0f-caaf-57eb-b8b3-acc5efc901a8',packaging='Estándar' WHERE id='d5bdf36e-551c-55ad-9778-8f5769e6e005' AND name='GUISERO MOSTACHOL' AND variety_id IS NULL;
+UPDATE products SET variety_id='67c9092b-f03f-5e16-8e49-75a82f256b87',packaging='Estándar' WHERE id='acc10933-355a-57e1-a7e7-da605eb6cd34' AND name='SOPERO' AND variety_id IS NULL;
+UPDATE products SET variety_id='7f193a95-defa-5718-a91d-c2810cf83fdd',packaging='Estándar' WHERE id='f3ea0a55-4727-55a0-b592-de99e58bbc73' AND name='MOÑO MEDIANO AMARILLO' AND variety_id IS NULL;
+UPDATE products SET variety_id='82a5f64b-49e2-5bba-98fa-c31031d71d23',packaging='Estándar' WHERE id='2384a2aa-8eef-5f07-a9b6-16d7a04c375e' AND name='MOÑO MEDIANO COLOR' AND variety_id IS NULL;
+UPDATE products SET variety_id='bc4bc135-5ffe-527c-a9ad-c7e4160a9499',packaging='Estándar' WHERE id='5ec0c112-91a5-5bd8-beaa-de6fe6d4f57f' AND name='MOÑO CHICO AMARILLO' AND variety_id IS NULL;
+UPDATE products SET variety_id='252897b4-17ad-5529-96c9-724a1fbd0b4c',packaging='Estándar' WHERE id='69ff0675-cd9c-5b54-96a3-d4462904cf8e' AND name='MOÑO CHICO COLOR' AND variety_id IS NULL;
+UPDATE products SET variety_id='f5245dc6-0730-55c1-b6c7-1ac2593a9a68',packaging='Estándar' WHERE id='c8024c7d-2ef9-5bae-9f9c-f6dfb93561fc' AND name='AL HUEVO AMARILLO DEL 2' AND variety_id IS NULL;
+UPDATE products SET variety_id='ac573faa-9915-5b0f-a3e5-316eaf9f5195',packaging='Estándar' WHERE id='b825952c-b873-556c-918b-cbd9c3671a9e' AND name='AL HUEVO AMARILLO DEL 3' AND variety_id IS NULL;
+UPDATE products SET variety_id='f360e8f7-4fd1-589c-b568-82ce21ef2b2c',packaging='Estándar' WHERE id='cb6e398b-e0d1-504b-9756-a2ccf1ca7da5' AND name='AL HUEVO VERDE DEL 2' AND variety_id IS NULL;
+UPDATE products SET variety_id='49feaf30-7ad1-5d78-b352-0ae97d1c0310',packaging='Estándar' WHERE id='5bc565c6-9225-5522-b474-d304c2f0ab2a' AND name='AL HUEVO VERDE DEL 3' AND variety_id IS NULL;
+UPDATE products SET variety_id='e52224d2-51e9-5c1a-85af-32cbe095c970',packaging='Estándar' WHERE id='b8846a52-0225-5555-904d-31d1eedb28e1' AND name='AL HUEVO MORRON DEL 2' AND variety_id IS NULL;
+UPDATE products SET variety_id='081f72ca-b7e0-57d9-a81f-5472111faf76',packaging='Estándar' WHERE id='18b98377-60ef-53a9-9f09-ed59d38a8c33' AND name='AL HUEVO MORRON DEL 3' AND variety_id IS NULL;
