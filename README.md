@@ -29,3 +29,7 @@ El peso se configura **por unidad en el catálogo de productos** (kg, hasta tres
 - `CLOUDFLARE_API_TOKEN`: token de API de Cloudflare restringido a esta cuenta con permisos de edición para Workers, Pages y D1.
 
 No copiar el token a archivos ni al historial de comandos. Después de guardar ambos secretos, ejecutar el workflow **Deploy EfraApp to Cloudflare** desde la pestaña Actions → Run workflow (rama `main`). Los siguientes commits en `main` se desplegarán automáticamente. Revisar la pestaña Actions si una publicación falla. Mantener `API_ORIGIN` configurada en el proyecto Pages para que `functions/api/[[path]].js` reenvíe las llamadas al Worker.
+
+## Reporte de compras por cliente
+
+En Historial, seleccionar cliente y fechas desde/hasta y pulsar **Ver resumen**. El reporte cuenta sólo despachos confirmados y respeta el alcance de lectura del usuario. Muestra cantidad de despachos, variedad de productos distintos, unidades y peso registrado total, con detalle por producto. El intervalo incluye ambos días según la fecha local argentina (UTC−03). Los kilos no registrados en despachos antiguos se señalan sin inventar un valor. La migración `0004_customer_contact_snapshot.sql` guarda domicilio y teléfono del cliente en cada despacho nuevo; para históricos anteriores copia los datos actuales del cliente una vez al aplicar la migración. Los comprobantes PDF y PNG muestran los datos disponibles.
