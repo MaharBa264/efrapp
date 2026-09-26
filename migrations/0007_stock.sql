@@ -8,9 +8,9 @@ CREATE TABLE stock_movements(id TEXT PRIMARY KEY,product_id TEXT NOT NULL REFERE
 CREATE INDEX stock_movements_product_date ON stock_movements(product_id,created_at DESC);
 CREATE UNIQUE INDEX stock_dispatch_once ON stock_movements(dispatch_id,product_id,kind) WHERE dispatch_id IS NOT NULL;
 CREATE TRIGGER stock_guard BEFORE INSERT ON stock_movements BEGIN
- SELECT CASE WHEN NEW.kind!='DISPATCH_VOID' AND (SELECT value FROM settings WHERE key='stock_enabled')!='1' THEN RAISE(ABORT,'Stock deshabilitado') END;
- SELECT CASE WHEN NEW.expected_quantity IS NOT NULL AND NEW.expected_quantity!=COALESCE((SELECT quantity FROM stock_levels WHERE product_id=NEW.product_id),0) THEN RAISE(ABORT,'Saldo modificado por otra operación') END;
- SELECT CASE WHEN NEW.delta<0 AND COALESCE((SELECT quantity FROM stock_levels WHERE product_id=NEW.product_id),0)+NEW.delta<0 THEN RAISE(ABORT,'Stock insuficiente') END;
+ SELECT (CASE WHEN NEW.kind!='DISPATCH_VOID' AND (SELECT value FROM settings WHERE key='stock_enabled')!='1' THEN RAISE(ABORT,'Stock deshabilitado') END);
+ SELECT (CASE WHEN NEW.expected_quantity IS NOT NULL AND NEW.expected_quantity!=COALESCE((SELECT quantity FROM stock_levels WHERE product_id=NEW.product_id),0) THEN RAISE(ABORT,'Saldo modificado por otra operación') END);
+ SELECT (CASE WHEN NEW.delta<0 AND COALESCE((SELECT quantity FROM stock_levels WHERE product_id=NEW.product_id),0)+NEW.delta<0 THEN RAISE(ABORT,'Stock insuficiente') END);
 END;
 CREATE TRIGGER stock_apply AFTER INSERT ON stock_movements BEGIN
  INSERT INTO stock_levels(product_id,quantity,minimum,updated_at) VALUES(NEW.product_id,0,0,NEW.created_at)
