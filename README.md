@@ -41,3 +41,13 @@ Administración → **Productos**: crear el producto base; **Variedades**: agreg
 ### Vendedores y transportistas
 
 En **Administración → Vendedores / Transportistas** se mantienen fichas independientes de las cuentas de usuario. Al crear un despacho se pueden elegir ambas fichas; el despacho guarda sus identificadores y nombres históricos. Las casillas para mostrar sólo sus nombres en el PDF o PNG aparecen al abrir el despacho y empiezan desmarcadas. Los despachos anteriores permanecen sin vendedor comercial ni transportista. Ejecutar `npm run db:remote` antes de publicar el Worker para aplicar `0006_dispatch_people.sql`.
+
+### Restauración y rediseño (26/09/2026)
+
+Antes de este cambio se fijó la rama `restore/2026-09-26-before-stock-redesign` en el commit `0b3a361`. Para recuperar esa versión, comparar esa rama con `main` y revertir los commits posteriores mediante Git; la rama de restauración no contiene credenciales ni datos de D1. La interfaz usa las mismas pautas que se pueden replicar en Android: color primario `#126b54`, fondo `#f5f7f4`, superficies blancas, radio de tarjeta 18 px, botones de al menos 44 px, navegación inferior móvil, tarjetas con acciones explícitas, pasos numerados y un resumen persistente antes de confirmar.
+
+### Stock (opcional)
+
+La migración `0007_stock.sql` crea saldos por presentación, mínimos y libro de movimientos. **El módulo empieza desactivado y todos los saldos empiezan en cero**. Sólo el superadmin puede activarlo en Administración → Configuración → Módulo de stock. Antes de confirmar nuevos despachos con stock activo, cargar las existencias desde Stock → Movimiento → Ingreso. También se admiten egresos manuales y ajustes por conteo (motivo obligatorio); cada movimiento registra usuario y fecha. Los mínimos sirven para señalar presentaciones en alerta, no para bloquear despachos.
+
+Con stock activo, cada confirmación descuenta unidades en la misma transacción que confirma el despacho y bloquea existencias insuficientes; la anulación de un despacho previamente descontado devuelve exactamente esas unidades. Los borradores no reservan stock. Los despachos históricos previos a la activación no generan movimientos retroactivos. Pausar el módulo conserva saldos y movimientos, pero los despachos confirmados durante la pausa no descuentan unidades; al reactivarlo hay que ajustar el saldo mediante conteo. Cuentas con permiso `stock.read` pueden consultar; `stock.manage` habilita movimientos y mínimos. Ambos permisos están asignados inicialmente a admin y superadmin, y pueden asignarse a otros roles.
