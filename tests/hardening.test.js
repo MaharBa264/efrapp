@@ -25,7 +25,7 @@ assert c.execute("SELECT next_number FROM dispatch_counter").fetchone()==(3,)
  assert.equal(result.status,0,result.stderr);
 });
 test('hardening migration adds login throttle and logo tables',()=>{
- const sql=migrations.at(-1);assert.match(sql,/login_attempts/);assert.match(sql,/issuer_logos/);
+ const sql=migrations.find(x=>x.includes('login_attempts'));assert.match(sql,/login_attempts/);assert.match(sql,/issuer_logos/);
 });
 test('worker protects superadmin, throttles login, snapshots logo once and filters dates in San Luis time',()=>{
  assert.match(worker,/El rol superadmin no se puede modificar/);
