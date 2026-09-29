@@ -1,6 +1,6 @@
 # EfraApp · Despachos
 
-Aplicación móvil PWA con frontend estático, API `/api/v1` en Worker y D1. Sin inventario. Los maestros se pueden editar; cada despacho conserva nombres y datos del emisor al crearse. Los números se asignan al confirmar mediante un contador en D1.
+Aplicación móvil PWA con frontend estático, API `/api/v1` en Worker y D1. El stock es opcional (módulo activable por el superadmin). Los maestros se pueden editar; cada despacho conserva nombres y datos del emisor al crearse. Los números se asignan al confirmar mediante un contador en D1.
 
 ## Desarrollo
 
